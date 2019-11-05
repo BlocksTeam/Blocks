@@ -18,7 +18,7 @@ namespace Blocks.Network
 	/// </summary>
 	public static class Types
 	{
-		public static enum PacketType
+		public enum PacketType
 		{
 			Bedrock,
 			Java
