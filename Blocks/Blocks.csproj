@@ -41,10 +41,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Network\Bedrock\BedrockPacket.cs" />
+    <Compile Include="Network\Java\JavaPacket.cs" />
     <Compile Include="Network\Packet.cs" />
     <Compile Include="Network\Types.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
     <Compile Include="Utils\Config.cs" />
   </ItemGroup>
   <ItemGroup>

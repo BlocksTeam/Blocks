@@ -11,17 +11,14 @@
  */
 using System;
 
-namespace Blocks.Network
+namespace Blocks
 {
 	/// <summary>
-	/// Network Types.
+	/// Global Server.
 	/// </summary>
-	public static class Types
+	public static class Server
 	{
-		public enum VersionType
-		{
-			BedrockEdition,
-			JavaEdition
-		}
+		public const string GLOBAL_VERSION = "v0.1";
+		public const string BUILD_SIGNATURE = "build 1";
 	}
 }

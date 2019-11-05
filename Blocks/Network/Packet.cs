@@ -18,6 +18,11 @@ namespace Blocks.Network
 	/// </summary>
 	public abstract class Packet
 	{
+		protected Types.VersionType VersionType;
 		
+		public Types.VersionType GameVersionType
+		{
+			get { return VersionType; }
+		}
 	}
 }

@@ -11,17 +11,13 @@
  */
 using System;
 
-namespace Blocks.Network
+namespace Blocks.Network.Java
 {
-	/// <summary>
-	/// Network Types.
-	/// </summary>
-	public static class Types
+	public class JavaPacket : Packet
 	{
-		public enum VersionType
+		JavaPacket()
 		{
-			BedrockEdition,
-			JavaEdition
+			VersionType = Types.VersionType.JavaEdition;
 		}
 	}
 }
