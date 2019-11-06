@@ -41,6 +41,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger.cs" />
     <Compile Include="Network\Bedrock\BedrockPacket.cs" />
     <Compile Include="Network\Java\JavaPacket.cs" />
     <Compile Include="Network\Packet.cs" />
@@ -54,12 +55,8 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Network" />
-    <Folder Include="Network\Bedrock" />
-    <Folder Include="Network\Bedrock\Raknet" />
-    <Folder Include="Network\Java" />
-    <Folder Include="Utils" />
-    <Folder Include="Player" />
+    <Folder Include="Network\Bedrock\Raknet\" />
+    <Folder Include="Player\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
