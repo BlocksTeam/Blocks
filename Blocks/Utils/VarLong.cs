@@ -10,24 +10,49 @@
 	* Contact Us: blocksteamcore@gmail.com
  */
 using System;
+using System.IO;
 
-using Blocks.Network.Bedrock;
-using Blocks.Network.Java;
-
-namespace Blocks.Network
+namespace Blocks.Utils
 {
 	/// <summary>
-	/// Basic Network class.
+	/// VarInt32.
 	/// </summary>
-	public static class Network
+	public class VarLong
 	{
-		static UDPListener UDPL;
-		static TCPListener TCPL;
+		public readonly MemoryStream CurrentStream = new MemoryStream();
 		
-		public static void StartListeners()
+		public void SetValue(ulong value)
 		{
-			UDPL = new UDPListener();
-			TCPL = new TCPListener();
+			while ((value & 0xFFFFFFFFFFFFFF80) != 0)
+			{
+				CurrentStream.WriteByte((byte) ((value & 0x7F) | 0x80));
+				value >>= 7;
+			}
+
+			CurrentStream.WriteByte((byte) value);
+		}
+		
+		public void SetValue(long value)
+		{
+			SetValue((ulong) value);
+		}
+		
+		public ulong GetValue(int maxSize)
+		{
+			ulong result = 0;
+			
+			int B0, J = 0;
+
+			do
+			{
+				B0 = CurrentStream.ReadByte();
+
+				result |= (ulong) (B0 & 0x7f) << J++ * 7;
+
+			} 
+			while ((B0 & 0x80) == 0x80);
+			
+			return result;
 		}
 	}
 }

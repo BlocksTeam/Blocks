@@ -20,7 +20,7 @@ namespace Blocks.Network
 	public abstract class Packet : DataStream
 	{
 		protected Types.VersionType VersionType;
-
+		
 		public Types.VersionType GameVersionType
 		{
 			get { return VersionType; }

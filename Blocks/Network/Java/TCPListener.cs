@@ -10,24 +10,31 @@
 	* Contact Us: blocksteamcore@gmail.com
  */
 using System;
+using System.Net;
 
-using Blocks.Network.Bedrock;
-using Blocks.Network.Java;
-
-namespace Blocks.Network
+namespace Blocks.Network.Java
 {
 	/// <summary>
-	/// Basic Network class.
+	/// TCPListener: Java Edition Minecraft Listener.
 	/// </summary>
-	public static class Network
+	public class TCPListener : Listener
 	{
-		static UDPListener UDPL;
-		static TCPListener TCPL;
-		
-		public static void StartListeners()
+		public TCPListener()
 		{
-			UDPL = new UDPListener();
-			TCPL = new TCPListener();
+			ConnectionType = Types.ConnectionType.TCP;
+			
+			Address = IPAddress.Any;
+			Port = int.Parse(Server.Properties.GetProperty("javaedition.port"));
+		}
+		
+		public override void StartListen()
+		{
+			
+		}
+		
+		public override void Close()
+		{
+			//TODO (close connections)
 		}
 	}
 }

@@ -11,6 +11,7 @@
  */
 using System;
 using System.IO;
+using Blocks.Utils;
 
 namespace Blocks.Network
 {
@@ -190,6 +191,34 @@ namespace Blocks.Network
 		public byte[] ReadBytesArray()
 		{
 			return ReadBytes((int) ReadUInt32());
+		}
+		
+		public void WriteVarInt(VarInt data)
+		{
+			WriteStream(data.CurrentStream);
+		}
+		
+		public void WriteVarLong(VarLong data)
+		{
+			WriteStream(data.CurrentStream);
+		}
+		
+		public ulong ReadVarInt(int maxSize = 5)
+		{
+			VarInt vi = new VarInt();
+			
+			vi.CurrentStream.Write(DataBytes, 0, DataBytesCount32);
+			
+			return vi.GetValue(maxSize);
+		}
+		
+		public ulong ReadVarLong(int maxSize = 10)
+		{
+			VarLong vl = new VarLong();
+			
+			vl.CurrentStream.Write(DataBytes, 0, DataBytesCount32);
+			
+			return vl.GetValue(maxSize);
 		}
 	}
 }

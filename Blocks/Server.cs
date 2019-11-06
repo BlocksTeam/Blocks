@@ -42,6 +42,9 @@ namespace Blocks
 			if(!Properties.ExistsProperty("bedrock.port"))
 				Properties.SetProperty("bedrock.port", "19132");
 			
+			if(!Properties.ExistsProperty("javaedition.port"))
+				Properties.SetProperty("javaedition.port", "25565");
+			
 			Properties.Save();
 		}
 	}
