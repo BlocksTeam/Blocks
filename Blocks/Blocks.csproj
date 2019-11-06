@@ -43,20 +43,36 @@
   <ItemGroup>
     <Compile Include="Logger.cs" />
     <Compile Include="Network\Bedrock\BedrockPacket.cs" />
+    <Compile Include="Network\Bedrock\UDPListener.cs" />
+    <Compile Include="Network\DataStream.cs" />
     <Compile Include="Network\Java\JavaPacket.cs" />
+    <Compile Include="Network\Listener.cs" />
+    <Compile Include="Network\Network.cs" />
     <Compile Include="Network\Packet.cs" />
     <Compile Include="Network\Types.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="Task\AsyncTask.cs" />
+    <Compile Include="Utils\Color.cs" />
     <Compile Include="Utils\Config.cs" />
+    <Compile Include="Utils\MetaTag.cs" />
+    <Compile Include="Utils\Sound.cs" />
+    <Compile Include="Utils\UUID.cs" />
+    <Compile Include="Utils\Vector3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Network\Bedrock\Raknet\" />
-    <Folder Include="Player\" />
+    <Folder Include="Network" />
+    <Folder Include="Network\Bedrock" />
+    <Folder Include="Network\Bedrock\Raknet" />
+    <Folder Include="Network\Java" />
+    <Folder Include="Level" />
+    <Folder Include="Task" />
+    <Folder Include="Utils" />
+    <Folder Include="Player" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

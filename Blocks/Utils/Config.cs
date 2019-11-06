@@ -18,7 +18,7 @@ namespace Blocks.Utils
 	/// <summary>
 	/// Properties config.
 	/// </summary>
-	public class Config
+	public class Config : MetaTag
 	{
 		public const string SWITCH_ON = "on";
 		public const string SWITCH_OFF = "off";
@@ -39,6 +39,8 @@ namespace Blocks.Utils
 				string[] lines = File.ReadAllLines(Path);
 				foreach(string line in lines)
 				{
+					if(line.Length > 0 && line[0] == '#') continue;
+					
 					string key = line.Split('=')[0];
 					string val = line.Split('=')[1];
 					Properties[key] = val;
@@ -46,21 +48,21 @@ namespace Blocks.Utils
 			}
 		}
 		
-		public string GetProperty(string Property)
+		public string GetProperty(string property)
 		{
-			if(ExistsProperty(Property))
-				return Properties[Property];
+			if(ExistsProperty(property))
+				return Properties[property];
 			else return null;
 		}
 		
-		public bool ExistsProperty(string Property)
+		public bool ExistsProperty(string property)
 		{
-			return Properties.ContainsKey(Property);
+			return Properties.ContainsKey(property);
 		}
 		
-		public void SetProperty(string Property, string Value)
+		public void SetProperty(string property, string value)
 		{
-			Properties[Property] = Value;
+			Properties[property] = value;
 		}
 		
 		public void Clear()

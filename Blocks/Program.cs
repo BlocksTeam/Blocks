@@ -18,6 +18,8 @@ namespace Blocks
 		public static void Main(string[] args)
 		{
 			//TODO Minecraft Server
+			Server.Start();
+			
 			
 			Console.ReadKey(true);
 		}

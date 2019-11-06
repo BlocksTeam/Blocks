@@ -11,23 +11,13 @@
  */
 using System;
 
-namespace Blocks.Network
+namespace Blocks.Utils
 {
 	/// <summary>
-	/// Network Types.
+	/// MetaTag: some information for object.
 	/// </summary>
-	public static class Types
+	public abstract class MetaTag
 	{
-		public enum VersionType
-		{
-			BedrockEdition,
-			JavaEdition
-		}
-		
-		public enum ConnectionType
-		{
-			TCP,
-			UDP
-		}
+		public object Tag;
 	}
 }

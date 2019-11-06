@@ -15,7 +15,7 @@ namespace Blocks.Network.Bedrock
 {
 	public class BedrockPacket : Packet
 	{
-		BedrockPacket()
+		public BedrockPacket()
 		{
 			VersionType = Types.VersionType.BedrockEdition;
 		}

@@ -11,23 +11,31 @@
  */
 using System;
 
-namespace Blocks.Network
+namespace Blocks.Network.Bedrock
 {
 	/// <summary>
-	/// Network Types.
+	/// TODO
 	/// </summary>
-	public static class Types
+	public class UDPListener : Listener
 	{
-		public enum VersionType
+		public UDPListener()
 		{
-			BedrockEdition,
-			JavaEdition
+			ConnectionType = Types.ConnectionType.UDP;
+			
+			//Address = ;
+			Port = int.Parse(Server.Properties.GetProperty("bedrock.port"));
+			
+			while(true) Logger.Info("Hello Network");
 		}
 		
-		public enum ConnectionType
+		public override void StartListen()
 		{
-			TCP,
-			UDP
+			//TODO (async)
+		}
+		
+		public override void Close()
+		{
+			//TODO (close connections)
 		}
 	}
 }

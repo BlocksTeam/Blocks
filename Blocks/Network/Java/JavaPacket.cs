@@ -15,7 +15,7 @@ namespace Blocks.Network.Java
 {
 	public class JavaPacket : Packet
 	{
-		JavaPacket()
+		public JavaPacket()
 		{
 			VersionType = Types.VersionType.JavaEdition;
 		}

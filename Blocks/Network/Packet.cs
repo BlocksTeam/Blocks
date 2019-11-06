@@ -10,13 +10,14 @@
 	* Contact Us: blocksteamcore@gmail.com
  */
 using System;
+using System.IO;
 
 namespace Blocks.Network
 {
 	/// <summary>
 	/// Minecraft Network Packet.
 	/// </summary>
-	public abstract class Packet
+	public abstract class Packet : DataStream
 	{
 		protected Types.VersionType VersionType;
 		

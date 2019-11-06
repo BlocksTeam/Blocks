@@ -10,24 +10,57 @@
 	* Contact Us: blocksteamcore@gmail.com
  */
 using System;
+using System.Threading;
 
-namespace Blocks.Network
+namespace Blocks.Task
 {
 	/// <summary>
-	/// Network Types.
+	/// AsyncTask as Thread.
 	/// </summary>
-	public static class Types
+	public abstract class AsyncTask
 	{
-		public enum VersionType
+		string Name;
+		bool Started;
+		
+		Thread CurrentThread;
+		
+		protected AsyncTask(string TaskName = "AsyncTask", bool AutoStart = false)
 		{
-			BedrockEdition,
-			JavaEdition
+			Name = TaskName;
+			
+			Started = false;
+			
+			if(AutoStart) Open();
 		}
 		
-		public enum ConnectionType
+		public override string ToString()
 		{
-			TCP,
-			UDP
+			return Name;
 		}
+
+		
+		public void Open(params object[] args)
+		{
+			if(!Started)
+			{
+				CurrentThread = new Thread( (ThreadStart) delegate
+				{
+				           	Run(args);
+				});
+				CurrentThread.Start();
+				
+				Started = true;
+			}
+		}
+		
+		public void Kill()
+		{
+			if(Started)
+			{
+				CurrentThread.Abort();
+			}
+		}
+		
+		protected abstract void Run(params object[] args);
 	}
 }

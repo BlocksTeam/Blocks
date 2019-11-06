@@ -11,23 +11,21 @@
  */
 using System;
 
+using Blocks.Network.Bedrock;
+using Blocks.Network.Java;
+
 namespace Blocks.Network
 {
 	/// <summary>
-	/// Network Types.
+	/// Basic Network class.
 	/// </summary>
-	public static class Types
+	public static class Network
 	{
-		public enum VersionType
-		{
-			BedrockEdition,
-			JavaEdition
-		}
+		static UDPListener UDPL;
 		
-		public enum ConnectionType
+		public static void StartListeners()
 		{
-			TCP,
-			UDP
+			UDPL = new UDPListener();
 		}
 	}
 }
