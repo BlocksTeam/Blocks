@@ -9,30 +9,15 @@
 	* https://github.com/blocksteam/Blocks
 	* Contact Us: blocksteamcore@gmail.com
  */
-using System;
-using System.Diagnostics;
 
-namespace Blocks.Network.Bedrock
+namespace Blocks.Network.Bedrock.Raknet
 {
-	public abstract class BedrockPacket : Packet
+	/// <summary>
+	/// List of packet identifiers.
+	/// </summary>
+	public class PacketIdentifiers
 	{
-		public BedrockPacket()
-		{
-			VersionType = Types.VersionType.BedrockEdition;
-		}
-
-		protected abstract void Encode();
-		protected abstract void Decode();
-
-		public void WriteMagic()
-		{
-			WriteBytesArray(new byte[] { 0x00, 0xff, 0xff, 0x00, 0xfe, 0xfe, 0xfe, 0xfe, 0xfd, 0xfd, 0xfd, 0xfd, 0x12, 0x34, 0x56, 0x78 });
-		}
-
-		public void WriteTime()
-		{
-			WriteLong(Stopwatch.GetTimestamp());
-		}
-
+		public const byte UNCONNECTED_PING = 0x01;
+		public const byte UNCONNECTED_PONG = 0x1c;
 	}
 }

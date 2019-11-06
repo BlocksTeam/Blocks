@@ -15,8 +15,14 @@ using System.Text;
 
 namespace Blocks
 {
+	/// <summary>
+	/// Server logger.
+	/// </summary>
 	class Logger
 	{
+
+		private static readonly StreamWriter File = new StreamWriter("server.log", true, Encoding.Default);
+
 		public static void Info(string text)
 		{
 			Log("[Info] " + text);
@@ -34,12 +40,8 @@ namespace Blocks
 
 		private static void Log(string text)
 		{
-			DateTime date = DateTime.Now;
-			Console.WriteLine("[" + date.ToLongTimeString() + "]" + text);
-			using (StreamWriter file = new StreamWriter("server.log", true, Encoding.Default))
-			{
-				file.WriteLine("[" + date + "]" + text);
-			}
+			Console.WriteLine("[" + DateTime.Now.ToLongTimeString() + "]" + text);
+			File.WriteLine("[" + DateTime.Now + "]" + text);
 		}
 	}
 }
