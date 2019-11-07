@@ -9,43 +9,19 @@
 	* https://github.com/blocksteam/Blocks
 	* Contact Us: blocksteamcore@gmail.com
  */
-using System;
 
-using Blocks.Utils;
-using Blocks.Network;
-using Blocks.Network.Bedrock;
-using Blocks.Network.Java;
-
-namespace Blocks
+namespace Blocks.Network.Bedrock
 {
 	/// <summary>
-	/// Global Server.
+	/// Encapsulated packet.
 	/// </summary>
-	public static class Server
+	public class EncapsulatedPacket : BedrockPacket
 	{
-		public const string GLOBAL_VERSION = "v0.1";
-		public const string BUILD_SIGNATURE = "build 1";
-		
-		public static Config Properties;
-		
-		public static void Start()
+
+		public EncapsulatedPacket()
 		{
-			Properties = new Config("server.properties");
-			
-			InitConfig();
-			
-			Network.Network.StartListeners();
+			PacketType = Types.PacketType.Encapsulated;
 		}
-		
-		public static void InitConfig()
-		{
-			if(!Properties.ExistsProperty("bedrockedition.port"))
-				Properties.SetProperty("bedrockedition.port", "19132");
-			
-			if(!Properties.ExistsProperty("javaedition.port"))
-				Properties.SetProperty("javaedition.port", "25565");
-			
-			Properties.Save();
-		}
+
 	}
 }

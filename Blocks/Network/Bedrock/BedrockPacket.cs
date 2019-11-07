@@ -14,15 +14,37 @@ using System.Diagnostics;
 
 namespace Blocks.Network.Bedrock
 {
-	public abstract class BedrockPacket : Packet
+	/// <summary>
+	/// Packet for Bedrock Edition.
+	/// </summary>
+	public class BedrockPacket : Packet
 	{
+		protected Types.PacketType PacketType;
+
 		public BedrockPacket()
 		{
 			VersionType = Types.VersionType.BedrockEdition;
+			PacketType = Types.PacketType.Simple;
 		}
 
-		protected abstract void Encode();
-		protected abstract void Decode();
+		public BedrockPacket(byte[] data)
+		{
+			VersionType = Types.VersionType.BedrockEdition;
+			PacketType = Types.PacketType.Simple;
+
+			WriteBytes(data);
+
+			BeginRead();
+		}
+
+		protected virtual void Encode()
+		{
+
+		}
+		protected virtual void Decode()
+		{
+
+		}
 
 		public void WriteMagic()
 		{
