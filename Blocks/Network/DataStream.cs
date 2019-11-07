@@ -11,6 +11,7 @@
  */
 using System;
 using System.IO;
+using System.Text;
 using Blocks.Utils;
 
 namespace Blocks.Network
@@ -25,6 +26,11 @@ namespace Blocks.Network
 		public DataStream() : base(new MemoryStream())
 		{
 			Writer = new BinaryWriter(BaseStream);
+		}
+		
+		public void BeginRead()
+		{
+			Writer.Seek(0, SeekOrigin.Begin);
 		}
 		
 		public byte[] DataBytes
@@ -170,7 +176,7 @@ namespace Blocks.Network
 		        return WriteBytes(d);
 			}
 			else return 0;
-    	}
+		}
 		
 		public int WriteStream(Stream stream)
 		{
@@ -193,32 +199,61 @@ namespace Blocks.Network
 			return ReadBytes((int) ReadUInt32());
 		}
 		
-		public void WriteVarInt(VarInt data)
+		public int ReadVarInt()
+        {
+            uint result = 0;
+            int length = 0;
+            while (true)
+            {
+                byte current = ReadByte();
+                result |= (current & 0x7Fu) << length++ * 7;
+
+                if ((current & 0x80) != 128)
+                    break;
+            }
+            return (int) result;
+        }
+		
+		public int ReadVarInt(out int length)
+        {
+            uint result = 0;
+            length = 0;
+            
+            while (true)
+            {
+                byte current =  ReadByte();
+                result |= (current & 0x7Fu) << length++ * 7;
+
+                if ((current & 0x80) != 128)
+                    break;
+            }
+            return (int) result;
+        }
+		
+		public void WriteVarInt(int integer)
 		{
-			WriteStream(data.CurrentStream);
+			while ((integer & -128) != 0)
+			{
+				Writer.Write((byte) (integer & 127 | 128));
+				integer = (int) (((uint) integer) >> 7);
+			}
+			Writer.Write((byte) integer);
 		}
 		
-		public void WriteVarLong(VarLong data)
+		public void WriteStringArray(string data)
 		{
-			WriteStream(data.CurrentStream);
+			byte[] stringData = Encoding.UTF8.GetBytes(data);
+			WriteVarInt(stringData.Length);
+			Writer.Write(stringData);
 		}
 		
-		public ulong ReadVarInt(int maxSize = 5)
+		public string ReadStringArray()
 		{
-			VarInt vi = new VarInt();
-			
-			vi.CurrentStream.Write(DataBytes, 0, DataBytesCount32);
-			
-			return vi.GetValue(maxSize);
+			int length = ReadVarInt();
+			byte[] stringValue = ReadBytes(length);
+
+			return Encoding.UTF8.GetString(stringValue);
 		}
 		
-		public ulong ReadVarLong(int maxSize = 10)
-		{
-			VarLong vl = new VarLong();
-			
-			vl.CurrentStream.Write(DataBytes, 0, DataBytesCount32);
-			
-			return vl.GetValue(maxSize);
-		}
 	}
 }

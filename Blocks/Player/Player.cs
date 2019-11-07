@@ -10,36 +10,29 @@
 	* Contact Us: blocksteamcore@gmail.com
  */
 using System;
-using System.IO;
-using System.Text;
 
-namespace Blocks.Network
+using Blocks.Utils;
+
+namespace Blocks.Player
 {
 	/// <summary>
-	/// Minecraft Network Packet.
+	/// Abstract Class of Game Player.
 	/// </summary>
-	public abstract class Packet : DataStream
+	public abstract class Player : MetaTag
 	{
-		protected Types.VersionType VersionType;
+		private string PlayerName = "";
 		
-		public Types.VersionType GameVersionType
+		public string Name
 		{
-			get { return VersionType; }
+			get { return Name; }
 		}
 		
-		public string AsStringText()
+		public override string ToString()
 		{
-			string result = "";
-			
-			BeginRead();
-			
-			byte[] bytes = DataBytes;
-			
-			foreach(byte b in bytes) result += b.ToString("X2") + " ";
-			
-			BeginRead();
-			
-			return "Packet { " + result + "} (string) { " + Encoding.UTF8.GetString(bytes);
+			return PlayerName;
 		}
+
+		
+		public string PlayerLabel, NameTag;
 	}
 }

@@ -24,8 +24,6 @@ namespace Blocks.Network.Bedrock
 			
 			//Address = ;
 			Port = int.Parse(Server.Properties.GetProperty("bedrock.port"));
-			
-			while(true) Logger.Info("Hello Network");
 		}
 		
 		public override void StartListen()

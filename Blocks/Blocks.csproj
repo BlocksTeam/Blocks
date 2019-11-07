@@ -48,10 +48,13 @@
     <Compile Include="Network\Bedrock\UDPListener.cs" />
     <Compile Include="Network\DataStream.cs" />
     <Compile Include="Network\Java\JavaPacket.cs" />
+    <Compile Include="Network\Java\PacketManager.cs" />
+    <Compile Include="Network\Java\TCPListener.cs" />
     <Compile Include="Network\Listener.cs" />
     <Compile Include="Network\Network.cs" />
     <Compile Include="Network\Packet.cs" />
     <Compile Include="Network\Types.cs" />
+    <Compile Include="Player\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
@@ -68,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Level\" />
+    <Folder Include="Network\Java\Raknet" />
     <Folder Include="Player\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

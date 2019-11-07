@@ -21,8 +21,8 @@ namespace Blocks.Network
 	/// </summary>
 	public static class Network
 	{
-		static UDPListener UDPL;
-		static TCPListener TCPL;
+		internal static UDPListener UDPL;
+		internal static TCPListener TCPL;
 		
 		public static void StartListeners()
 		{
