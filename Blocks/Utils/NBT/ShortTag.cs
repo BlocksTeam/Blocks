@@ -11,15 +11,22 @@
  */
 using System;
 
-namespace Blocks
+namespace Blocks.Utils.NBT
 {
-	class Program
+	public class ShortTag : Tag
 	{
-		public static void Main(string[] args)
+		public short Value;
+		
+		public ShortTag(short value)
 		{
-			Server.Start();
+			Name = "ShortTag";
 			
-			Console.ReadKey(true);
+			Value = value;
+		}
+		
+		public byte Id
+		{
+			get { return TAG_Short; }
 		}
 	}
 }

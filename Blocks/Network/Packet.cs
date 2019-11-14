@@ -18,7 +18,7 @@ namespace Blocks.Network
 	/// <summary>
 	/// Minecraft Network Packet.
 	/// </summary>
-	public abstract class Packet : DataStream
+	public abstract class Packet : Utils.DataStream
 	{
 		protected Types.VersionType VersionType;
 		

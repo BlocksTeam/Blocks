@@ -11,15 +11,22 @@
  */
 using System;
 
-namespace Blocks
+namespace Blocks.Utils.NBT
 {
-	class Program
+	public class DoubleTag : Tag
 	{
-		public static void Main(string[] args)
+		public double Value;
+		
+		public DoubleTag(double value)
 		{
-			Server.Start();
+			Name = "DoubleTag";
 			
-			Console.ReadKey(true);
+			Value = value;
+		}
+		
+		public byte Id
+		{
+			get { return TAG_Double; }
 		}
 	}
 }

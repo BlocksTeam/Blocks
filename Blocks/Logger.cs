@@ -21,7 +21,7 @@ namespace Blocks
 	class Logger
 	{
 
-		private static readonly StreamWriter File = new StreamWriter("server.log", true, Encoding.Default);
+		private static readonly StreamWriter File = new StreamWriter("server.log", true, Encoding.UTF8);
 
 		public static void Info(string text)
 		{
@@ -41,7 +41,7 @@ namespace Blocks
 		private static void Log(string text)
 		{
 			Console.WriteLine("[" + DateTime.Now.ToLongTimeString() + "]" + text);
-			File.WriteLine("[" + DateTime.Now + "]" + text);
+			File.WriteLine("[" + DateTime.Now.ToLongTimeString() + "]" + text);
 		}
 	}
 }

@@ -29,7 +29,7 @@ namespace Blocks.Network
 			TCP,
 			UDP
 		}
-
+		
 		public enum PacketType
 		{
 			Simple,

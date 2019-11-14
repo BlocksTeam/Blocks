@@ -12,9 +12,8 @@
 using System;
 using System.IO;
 using System.Text;
-using Blocks.Utils;
 
-namespace Blocks.Network
+namespace Blocks.Utils
 {
 	/// <summary>
 	/// Binary Write and Read methods.
@@ -56,6 +55,7 @@ namespace Blocks.Network
 		public void Clean()
 		{
 			Writer.Flush();
+			BaseStream.Flush();
 		}
 		
 		public int WriteBoolean(bool data)
@@ -187,11 +187,10 @@ namespace Blocks.Network
 			return WriteBytes(data);
 		}
 		
-		public int WriteBytesArray(byte[] data)
+		public void WriteBytesArray(byte[] data)
 		{
-			WriteUInt((uint) data.Length);
-			
-			return WriteBytes(data) + sizeof(uint);
+			WriteVarInt(data.Length);
+			WriteBytes(data);
 		}
 		
 		public byte[] ReadBytesArray()
@@ -201,17 +200,23 @@ namespace Blocks.Network
 		
 		public int ReadVarInt()
         {
-            uint result = 0;
-            int length = 0;
-            while (true)
-            {
-                byte current = ReadByte();
-                result |= (current & 0x7Fu) << length++ * 7;
-
-                if ((current & 0x80) != 128)
-                    break;
-            }
-            return (int) result;
+			
+	        uint result = 0;
+	        int length = 0;
+	        
+	        try
+			{
+	            while (true)
+	            {
+	                byte current = ReadByte();
+	                result |= (current & 0x7Fu) << length++ * 7;
+	
+	                if ((current & 0x80) != 128)
+	                    break;
+	            }
+	            return (int) result;
+			}
+			catch { return -length; }
         }
 		
 		public int ReadVarInt(out int length)
@@ -240,20 +245,31 @@ namespace Blocks.Network
 			Writer.Write((byte) integer);
 		}
 		
-		public void WriteStringArray(string data)
+		public void WriteStringArray(string data, Encoding encoding = null)
 		{
-			byte[] stringData = Encoding.UTF8.GetBytes(data);
+			if(encoding == null) encoding = Encoding.UTF8;
+			
+			byte[] stringData = encoding.GetBytes(data);
 			WriteVarInt(stringData.Length);
 			Writer.Write(stringData);
 		}
 		
-		public string ReadStringArray()
+		public string ReadStringArray(Encoding encoding = null)
 		{
+			if(encoding == null) encoding = Encoding.UTF8;
+			
 			int length = ReadVarInt();
 			byte[] stringValue = ReadBytes(length);
 
-			return Encoding.UTF8.GetString(stringValue);
+			return encoding.GetString(stringValue);
 		}
 		
+		
+		public static int SizeVarInt(int varIntValue)
+		{
+			DataStream stream = new DataStream();
+			stream.WriteVarInt(varIntValue);
+			return stream.DataBytesCount32;
+		}
 	}
 }

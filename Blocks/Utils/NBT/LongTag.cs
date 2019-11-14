@@ -11,15 +11,22 @@
  */
 using System;
 
-namespace Blocks
+namespace Blocks.Utils.NBT
 {
-	class Program
+	public class LongTag : Tag
 	{
-		public static void Main(string[] args)
+		public long Value;
+		
+		public LongTag(long value)
 		{
-			Server.Start();
+			Name = "LongTag";
 			
-			Console.ReadKey(true);
+			Value = value;
+		}
+		
+		public byte Id
+		{
+			get { return TAG_Long; }
 		}
 	}
 }

@@ -11,15 +11,38 @@
  */
 using System;
 
-namespace Blocks
+namespace Blocks.Level.Entities
 {
-	class Program
+	/// <summary>
+	/// Minecraft Entity.
+	/// </summary>
+	public class Entity
 	{
-		public static void Main(string[] args)
+		public static int EntityCounter
 		{
-			Server.Start();
-			
-			Console.ReadKey(true);
+			get;
+			private set;
+		}
+		
+		public static void InitializeEntities()
+		{
+			EntityCounter = 0;
+		}
+		
+		public int Identifier
+		{
+			get;
+			protected set;
+		}
+		
+		public int EntityId
+		{
+			get;
+			protected set;
+		}
+		
+		public Entity()
+		{
 		}
 	}
 }

@@ -11,15 +11,21 @@
  */
 using System;
 
-namespace Blocks
+namespace Blocks.Player
 {
-	class Program
+	/// <summary>
+	/// DesktopPlayer: player on Bedrock Edition.
+	/// </summary>
+	public class BedrockPlayer : Player
 	{
-		public static void Main(string[] args)
+		public override void Close(string reason)
 		{
-			Server.Start();
-			
-			Console.ReadKey(true);
+			throw new NotImplementedException();
+		}
+		
+		public override bool IsOnline()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

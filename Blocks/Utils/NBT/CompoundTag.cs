@@ -11,15 +11,20 @@
  */
 using System;
 
-namespace Blocks
+namespace Blocks.Utils.NBT
 {
-	class Program
+	public class CompoundTag : Tag
 	{
-		public static void Main(string[] args)
+		public CompoundTag()
 		{
-			Server.Start();
+			Name = "CompoundTag";
 			
-			Console.ReadKey(true);
+			
+		}
+		
+		public byte Id
+		{
+			get { return TAG_Compound; }
 		}
 	}
 }

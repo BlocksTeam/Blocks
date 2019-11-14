@@ -11,15 +11,22 @@
  */
 using System;
 
-namespace Blocks
+namespace Blocks.Utils.NBT
 {
-	class Program
+	public class FloatTag : Tag
 	{
-		public static void Main(string[] args)
+		public float Value;
+		
+		public FloatTag(float value)
 		{
-			Server.Start();
+			Name = "CompoundTag";
 			
-			Console.ReadKey(true);
+			Value = value;
+		}
+		
+		public byte Id
+		{
+			get { return TAG_Float; }
 		}
 	}
 }

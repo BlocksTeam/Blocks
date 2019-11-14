@@ -13,8 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Security.Cryptography;
-using System.Text;
+using System.Threading;
 
 namespace Blocks.Network.Java
 {
@@ -23,92 +22,116 @@ namespace Blocks.Network.Java
 	/// </summary>
 	public class TCPListener : Listener
 	{
-		public TcpListener Listener;
+		public Socket Listener;
 		
 		internal IPEndPoint EndPoint;
-		
-		internal RSACryptoServiceProvider CryptoServiceProvider;
-		internal RSAParameters ServerKey;
-		
-		protected Object Locker = new Object();
 		
 		protected bool Listening = false;
 		
 		public TCPListener()
 		{
 			ConnectionType = Types.ConnectionType.TCP;
+			
+			PacketManager.Initialize();
 		}
-		
-		public readonly List<TcpClient> Connections = new List<TcpClient>();
 		
 		public override void StartListen()
 		{
 			Address = IPAddress.Any;
 			Port = int.Parse(Server.Properties.GetProperty("javaedition.port"));
 			
-			CryptoServiceProvider = new RSACryptoServiceProvider(1024);
-            ServerKey = CryptoServiceProvider.ExportParameters(true);
-			
 			EndPoint = new IPEndPoint(Address, Port);
 			
-			Listener = new TcpListener(EndPoint);
+			Server.Log("Starting TCPListener on {0}...", EndPoint.ToString());
+			
+			Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			
 			Listening = true;
 			
-            Listener.Start();
+			Listener.Bind(EndPoint);
+			
+			Listener.Listen(Server.MaxOnline);
             
-            Listener.BeginAcceptTcpClient(AcceptClientAsync, null);
+            new Thread(DataStreamManage).Start();
+            
+            ConnectinsManage();
 		}
 		
 		public override void Close()
 		{
-			Listener.Stop();
+			Listener.Close();
 			
 			Listening = false;
 			
 			Listener = null;
 		}
 		
-		protected void AcceptClientAsync(IAsyncResult result)
-		{
-            lock (Locker)
-            {
-                if (Listener != null)
-                {
-	                TcpClient connection = Listener.EndAcceptTcpClient(result);
-	                
-	                Connections.Add(connection);
-	                
-	                HandleDataPacket(connection);
-	                
-	                Listener.BeginAcceptTcpClient(AcceptClientAsync, null);
-                }
-            }
-        }
-		
-		public void HandleDataPacket(TcpClient connection)
+		public void HandleData(Socket connection)
 		{
 			if(Listening)
             {
-				Queue<byte> queue = new Queue<byte>();
+				byte[] data = new byte[connection.Available];
 				
-				while(connection.GetStream().DataAvailable)
-					queue.Enqueue((byte) connection.GetStream().ReadByte());
-            			
-				PacketManager.Execute(new JavaPacket(queue.ToArray()), connection);
+				connection.Receive(data);
+				
+				Container container = new Container(data);
+				
+				//Server.Info("In container: {0} packets", container.ToPackets().Length);
+				
+				foreach(JavaPacket packet in container.ToPackets()) PacketManager.Execute(packet, connection);
             }
 		}
 		
-		public void SendPacket(TcpClient connection, JavaPacket packet)
+		internal readonly List<Socket> ActiveConnections = new List<Socket>();
+		
+		public void SendPacket(Socket connection, JavaPacket packet, bool closeConnection = false)
 		{
 			if(Listening)
             {
 				packet.BeginRead();
-
-				connection.Client.Send(packet.DataBytes);
 				
-				//Logger.Info(packet.AsStringText());
+				if(closeConnection) 
+				{	
+					if(ActiveConnections.Contains(connection))
+						ActiveConnections.Remove(connection);
+				}
+				
+				if(connection.Connected) 
+					connection.Send(packet.DataBytes);
+				else connection.Close();
             }
+		}
+		
+		public int CHECK_TIMEOUT_MS = 25;
+		
+		protected void DataStreamManage()
+		{
+			while(Listening)
+			{
+				if(ActiveConnections.Count > 0)
+				{
+					foreach(Socket c in ActiveConnections.ToArray())
+					{
+						if(!c.Connected)
+						{
+							ActiveConnections.Remove(c);
+						}
+						else if(c.Available > 0) HandleData(c);
+					}
+				}
+				
+				Thread.Sleep(CHECK_TIMEOUT_MS);
+			}
+		}
+		
+		protected void ConnectinsManage()
+		{
+			while(Listening)
+			{
+				Socket connection = Listener.Accept();
+				
+				ActiveConnections.Add(connection);
+			}
 		}
 	}
 }

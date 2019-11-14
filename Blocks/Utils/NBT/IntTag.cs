@@ -11,15 +11,22 @@
  */
 using System;
 
-namespace Blocks
+namespace Blocks.Utils.NBT
 {
-	class Program
+	public class IntTag : Tag
 	{
-		public static void Main(string[] args)
+		public int Value;
+		
+		public IntTag(int value)
 		{
-			Server.Start();
+			Name = "IntTag";
 			
-			Console.ReadKey(true);
+			Value = value;
+		}
+		
+		public byte Id
+		{
+			get { return TAG_Int; }
 		}
 	}
 }

@@ -18,6 +18,24 @@ namespace Blocks.Utils
 	/// </summary>
 	public class Vector3 : MetaTag
 	{
+		public static Vector3 Min(Vector3 pos1, Vector3 pos2)
+        {
+            return new Vector3(
+	                Math.Min(pos1.X, pos2.X),
+	                Math.Min(pos1.Y, pos2.Y),
+	                Math.Min(pos1.Z, pos2.Z)
+                );
+        }
+
+        public static Vector3 Max(Vector3 pos1, Vector3 pos2)
+        {
+            return new Vector3(
+	                Math.Max(pos1.X, pos2.X),
+	                Math.Max(pos1.Y, pos2.Y),
+	                Math.Max(pos1.Z, pos2.Z)
+                );
+        }
+		
 		public double X, Y, Z;
 		
 		public Vector3()
@@ -79,6 +97,11 @@ namespace Blocks.Utils
 		{
 			get { return new Vector3(Math.Abs(X), Math.Abs(Y), Math.Abs(Z)); }
 		}
+		
+		public virtual bool Equals(Vector3 pos)
+        {
+            return pos.X.Equals(X) && pos.Y.Equals(Y) && pos.Z.Equals(Z);
+        }
 		
 		public float[] Float
 		{

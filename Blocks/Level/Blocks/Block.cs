@@ -11,15 +11,30 @@
  */
 using System;
 
-namespace Blocks
+using Blocks.Utils;
+
+namespace Blocks.Level.Blocks
 {
-	class Program
+	/// <summary>
+	/// Block of Minecraft World.
+	/// </summary>
+	public abstract class Block : MetaTag
 	{
-		public static void Main(string[] args)
+		public int Id
 		{
-			Server.Start();
-			
-			Console.ReadKey(true);
+			protected set;
+			get;
+		}
+		
+		public string Name
+		{
+			protected set;
+			get;
+		}
+		
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }

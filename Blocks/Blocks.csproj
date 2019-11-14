@@ -10,17 +10,34 @@
     <AssemblyName>Blocks</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <NoWin32Manifest>False</NoWin32Manifest>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\proco\AppData\Roaming\ICSharpCode\SharpDevelop5\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Output\</OutputPath>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartAction>Project</StartAction>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -41,6 +58,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control\Command.cs" />
+    <Compile Include="Level\Blocks\Block.cs" />
+    <Compile Include="Level\Chunk.cs" />
+    <Compile Include="Level\Entities\Entity.cs" />
+    <Compile Include="Level\MinecraftWorld.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Network\Bedrock\BedrockPacket.cs" />
     <Compile Include="Network\Bedrock\EncapsulatedPacket.cs" />
@@ -48,14 +70,18 @@
     <Compile Include="Network\Bedrock\PacketManager.cs" />
     <Compile Include="Network\Bedrock\Raknet\UnconnectedPong.cs" />
     <Compile Include="Network\Bedrock\UDPListener.cs" />
-    <Compile Include="Network\DataStream.cs" />
+    <Compile Include="Network\Java\Container.cs" />
     <Compile Include="Network\Java\JavaPacket.cs" />
     <Compile Include="Network\Java\PacketManager.cs" />
+    <Compile Include="Network\Java\Packet\PacketList.cs" />
+    <Compile Include="Network\Java\Session.cs" />
     <Compile Include="Network\Java\TCPListener.cs" />
     <Compile Include="Network\Listener.cs" />
     <Compile Include="Network\Network.cs" />
     <Compile Include="Network\Packet.cs" />
     <Compile Include="Network\Types.cs" />
+    <Compile Include="Player\BedrockPlayer.cs" />
+    <Compile Include="Player\DesktopPlayer.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,7 +89,21 @@
     <Compile Include="Task\AsyncTask.cs" />
     <Compile Include="Utils\Color.cs" />
     <Compile Include="Utils\Config.cs" />
+    <Compile Include="Utils\DataStream.cs" />
+    <Compile Include="Utils\Depends\Crypto.cs" />
     <Compile Include="Utils\MetaTag.cs" />
+    <Compile Include="Utils\NBT\ByteTag.cs" />
+    <Compile Include="Utils\NBT\CompoundTag.cs" />
+    <Compile Include="Utils\NBT\DoubleTag.cs" />
+    <Compile Include="Utils\NBT\IntTag.cs" />
+    <Compile Include="Utils\NBT\LongTag.cs" />
+    <Compile Include="Utils\NBT\NBTStream.cs" />
+    <Compile Include="Utils\NBT\StringTag.cs" />
+    <Compile Include="Utils\NBT\Tag.cs" />
+    <Compile Include="Utils\NBT\ShortTag.cs" />
+    <Compile Include="Utils\NBT\FloatTag.cs" />
+    <Compile Include="Utils\Position.cs" />
+    <Compile Include="Utils\ServerInfo.cs" />
     <Compile Include="Utils\Sound.cs" />
     <Compile Include="Utils\UUID.cs" />
     <Compile Include="Utils\Vector3.cs" />
@@ -73,7 +113,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Level\" />
-    <Folder Include="Network\Java\Raknet\" />
+    <Folder Include="Level\Entities" />
+    <Folder Include="Level\Blocks" />
+    <Folder Include="Network\Java\Packet" />
+    <Folder Include="Control" />
+    <Folder Include="Player\" />
+    <Folder Include="Utils\Depends" />
+    <Folder Include="Utils\NBT" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

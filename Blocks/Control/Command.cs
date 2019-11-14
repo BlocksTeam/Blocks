@@ -10,16 +10,19 @@
 	* Contact Us: blocksteamcore@gmail.com
  */
 using System;
+using System.Collections.Generic;
 
-namespace Blocks
+namespace Blocks.Control
 {
-	class Program
+	/// <summary>
+	/// Commands for console and players.
+	/// </summary>
+	public class Command
 	{
-		public static void Main(string[] args)
+		public List<Command> Commands = new List<Command>();
+		
+		public Command()
 		{
-			Server.Start();
-			
-			Console.ReadKey(true);
 		}
 	}
 }

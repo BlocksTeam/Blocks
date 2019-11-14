@@ -11,15 +11,29 @@
  */
 using System;
 
-namespace Blocks
+namespace Blocks.Utils.NBT
 {
-	class Program
+	public class ByteTag : Tag
 	{
-		public static void Main(string[] args)
+		public byte Value;
+		
+		public ByteTag(byte value)
 		{
-			Server.Start();
+			Name = "ByteTag";
 			
-			Console.ReadKey(true);
+			Value = value;
+		}
+		
+		public ByteTag(bool value)
+		{
+			Name = "ByteTag";
+			
+			
+		}
+		
+		public byte Id
+		{
+			get { return TAG_Byte; }
 		}
 	}
 }
